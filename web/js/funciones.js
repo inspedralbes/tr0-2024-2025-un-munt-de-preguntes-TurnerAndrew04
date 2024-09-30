@@ -1,23 +1,14 @@
 let data;
 
-/*function getPreguntas() {
-  fetch('http://localhost/proyecto_0_turner/js/getPreguntas.php?num=10')
-    .then(response => response.json())
-    .then(info => {
-      data = info;
-      mostrarPregunta();
-    })
-}*/
-
-
 fetch('http://localhost:8000/proyecto 0_turner/js/getPreguntas.php?num=10')
 .then(response => response.json())
 .then(info => {
   data = info; 
-  console.log(data);
+  //console.log(data);
   mostrarPregunta();
   actualizarMarcador();
-});
+});   
+
 
 let numeroPregunta = 0;
 let opcions = ['A', 'B', 'C', 'D'];
