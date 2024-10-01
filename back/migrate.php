@@ -16,7 +16,7 @@ echo "Connected successfully";
 $sqlDrop = "DROP TABLE IF EXISTS preguntas;";
 
 if ($conn->query($sqlDrop) === TRUE) {
-  echo "Table eliminada";
+  echo "Tabla eliminada";
 } else {
   echo "Error al eliminar la tabla" . $conn->error;
 }

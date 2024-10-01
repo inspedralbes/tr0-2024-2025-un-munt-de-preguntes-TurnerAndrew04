@@ -1,6 +1,6 @@
 let data;
 
-fetch('http://localhost:8000/proyecto 0_turner/js/getPreguntas.php?num=10')
+fetch('http://localhost:8000/tr0-2024-2025-un-munt-de-preguntes-TurnerAndrew04/back/getPreguntas.php?num=10')
 .then(response => response.json())
 .then(info => {
   data = info; 
@@ -94,5 +94,3 @@ function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
     mostrarPregunta();
   }, 2000);
 }
-
-//getPreguntas();

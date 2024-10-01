@@ -9,7 +9,7 @@ shuffle($preguntes);
 $preguntasSeleccionadas = array_slice($preguntes, 0, $numPreguntes);
 
 foreach ($preguntasSeleccionadas as &$pregunta) {
-    unset($pregunta['respuesta']);  
+    unset($pregunta['resposta_correcta']);  
 }
 
 //echo js_encode($preguntasSeleccionadas);
