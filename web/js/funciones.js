@@ -4,7 +4,7 @@ fetch('http://localhost:8000/tr0-2024-2025-un-munt-de-preguntes-TurnerAndrew04/b
 .then(response => response.json())
 .then(info => {
   data = info; 
-  //console.log(data);
+  console.log(data);
   mostrarPregunta();
   actualizarMarcador();
 });   
@@ -50,6 +50,7 @@ function actualizarMarcador() {
   document.getElementById("marcador").innerHTML = htmlString;
 }
 
+
 function mostrarPregunta() {
   const partidaDiv = document.getElementById('partida');
   const comentarioDiv = document.getElementById('comentario');
@@ -64,33 +65,74 @@ function mostrarPregunta() {
   let htmlString = `<br><h2>${preguntaActual.pregunta}</h2>`;
 
   for (let j = 0; j < preguntaActual.respostes.length; j++) {
-    htmlString += `<button onclick="corregirRespuesta(${j}, ${preguntaActual.resposta_correcta})">${opcions[j]} </button> ${preguntaActual.respostes[j].etiqueta}<br>`;
-
+    htmlString += `<button class="resposta-button" data-index="${j}" data-correcta="${preguntaActual.resposta_correcta}">${opcions[j]} </button> ${preguntaActual.respostes[j].etiqueta}<br>`;
   }
-  numeroPregunta++;
 
+  numeroPregunta++;
   partidaDiv.innerHTML = htmlString;
+  
+  const buttons = partidaDiv.querySelectorAll('.resposta-button');
+  buttons.forEach(button => {
+    button.addEventListener('click', (event) => {
+      const index = parseInt(event.target.getAttribute('data-index'));
+      const respuestaCorrecta = parseInt(event.target.getAttribute('data-correcta'));
+      corregirRespuesta(index, respuestaCorrecta);
+    });
+  });
 }
 
 
+// function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
+//   const comentarioDiv = document.getElementById('comentario');
+
+//   estadoPartida.preguntes[numeroPregunta-1].hecha=true;
+//   estadoPartida.contadorPreguntas++;
+//   estadoPartida.preguntes[numeroPregunta-1].resposta=respuestaCliente;
+
+//   if (respuestaCliente === respuestaCorrecta-1) {
+
+//     puntuacionActual++;
+//     comentarioDiv.innerHTML = "<p>Respuesta Correcta!</p>";
+//   } else {
+//     comentarioDiv.innerHTML = "<p>Respuesta Incorrecta!</p>";
+//   }
+
+//   actualizarMarcador();
+
+//   setTimeout(() => {
+//     mostrarPregunta();
+//   }, 2000);
+// }
+
 function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
   const comentarioDiv = document.getElementById('comentario');
+  const preguntaActual = data[numeroPregunta - 1];
+  const Acorregir = {
+    pregunta_id: preguntaActual.id,
+    respuesta_cliente: respuestaCliente + 1 
+  };
 
-  estadoPartida.preguntes[numeroPregunta-1].hecha=true;
-  estadoPartida.contadorPreguntas++;
-  estadoPartida.preguntes[numeroPregunta-1].resposta=respuestaCliente;
+  fetch('../back/corregir.php', {
+    method: 'POST',
+    body: JSON.stringify(Acorregir)
+  })
+  .then(response => response.json())
+  .then(data => {
+    estadoPartida.preguntes[numeroPregunta - 1].hecha = true;
+    estadoPartida.contadorPreguntas++;
+    estadoPartida.preguntes[numeroPregunta - 1].resposta = respuestaCliente;
 
-  if (respuestaCliente === respuestaCorrecta - 1 ) {
+    if (data.correcta) {
+      puntuacionActual++;
+      comentarioDiv.innerHTML = "<p>Respuesta Correcta!</p>";
+    } else {
+      comentarioDiv.innerHTML = "<p>Respuesta Incorrecta!</p>";
+    }
 
-    puntuacionActual++;
-    comentarioDiv.innerHTML = "<p>Respuesta Correcta!</p>";
-  } else {
-    comentarioDiv.innerHTML = "<p>Respuesta Incorrecta!</p>";
-  }
+    actualizarMarcador();
 
-  actualizarMarcador();
-
-  setTimeout(() => {
-    mostrarPregunta();
-  }, 2000);
+    setTimeout(() => {
+      mostrarPregunta();
+    }, 2000);
+  })
 }
