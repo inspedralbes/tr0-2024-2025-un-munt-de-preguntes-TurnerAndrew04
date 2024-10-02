@@ -81,29 +81,6 @@ function mostrarPregunta() {
   });
 }
 
-
-// function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
-//   const comentarioDiv = document.getElementById('comentario');
-
-//   estadoPartida.preguntes[numeroPregunta-1].hecha=true;
-//   estadoPartida.contadorPreguntas++;
-//   estadoPartida.preguntes[numeroPregunta-1].resposta=respuestaCliente;
-
-//   if (respuestaCliente === respuestaCorrecta-1) {
-
-//     puntuacionActual++;
-//     comentarioDiv.innerHTML = "<p>Respuesta Correcta!</p>";
-//   } else {
-//     comentarioDiv.innerHTML = "<p>Respuesta Incorrecta!</p>";
-//   }
-
-//   actualizarMarcador();
-
-//   setTimeout(() => {
-//     mostrarPregunta();
-//   }, 2000);
-// }
-
 function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
   const comentarioDiv = document.getElementById('comentario');
   const preguntaActual = data[numeroPregunta - 1];
