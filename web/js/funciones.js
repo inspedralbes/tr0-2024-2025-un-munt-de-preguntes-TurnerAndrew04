@@ -10,6 +10,8 @@ fetch('http://localhost:8000/tr0-2024-2025-un-munt-de-preguntes-TurnerAndrew04/b
 });   
 
 
+
+
 let numeroPregunta = 0;
 let opcions = ['A', 'B', 'C', 'D'];
 let puntuacionActual = 0;

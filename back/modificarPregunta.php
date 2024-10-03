@@ -36,7 +36,6 @@ if ($stmt->execute()) {
     echo json_encode(["Pregunta Modificada" => false, "Error al modificar la pregunta" => $stmt->error]);
 }
 
-// Cerrar la declaración y la conexión
 $stmt->close();
 $conn->close();
 ?>

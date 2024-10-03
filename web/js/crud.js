@@ -1,3 +1,34 @@
+function mostrarPregunta() {
+    const partidaDiv = document.getElementById('partida');
+    const comentarioDiv = document.getElementById('comentario');
+    comentarioDiv.innerHTML = '';
+  
+    if (numeroPregunta >= data.length) {
+      partidaDiv.innerHTML = `<h2>Tu puntuación es: ${puntuacionActual} de ${numeroPregunta}</h2>`;
+      return;
+    }
+  
+    let preguntaActual = data[numeroPregunta];
+    let htmlString = `<br><h2>${preguntaActual.pregunta}</h2>`;
+  
+    for (let j = 0; j < preguntaActual.respostes.length; j++) {
+      htmlString += `<button class="resposta-button" data-index="${j}" data-correcta="${preguntaActual.resposta_correcta}">${opcions[j]} </button> ${preguntaActual.respostes[j].etiqueta}<br>`;
+    }
+  
+    numeroPregunta++;
+    partidaDiv.innerHTML = htmlString;
+    
+    const buttons = partidaDiv.querySelectorAll('.resposta-button');
+    buttons.forEach(button => {
+      button.addEventListener('click', (event) => {
+        const index = parseInt(event.target.getAttribute('data-index'));
+        const respuestaCorrecta = parseInt(event.target.getAttribute('data-correcta'));
+        corregirRespuesta(index, respuestaCorrecta);
+      });
+    });
+  }
+
+
 function modificarPregunta(idPregunta, nuevaPregunta, nuevasRespuestas, nuevaRespuestaCorrecta) {
     const datosModificados = {
       id: idPregunta,
