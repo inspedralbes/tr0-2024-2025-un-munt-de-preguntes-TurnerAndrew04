@@ -1,4 +1,6 @@
 <?php
+include ("connexion.php");
+
 $servername = "localhost";
 $username = "turner2";
 $password = "123456789hola";
