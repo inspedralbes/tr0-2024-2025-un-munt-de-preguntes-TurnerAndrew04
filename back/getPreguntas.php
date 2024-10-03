@@ -12,7 +12,6 @@ foreach ($preguntasSeleccionadas as &$pregunta) {
     unset($pregunta['resposta_correcta']);  
 }
 
-//echo js_encode($preguntasSeleccionadas);
 echo json_encode($preguntasSeleccionadas);
 
 ?>
