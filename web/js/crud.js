@@ -1,62 +1,118 @@
+let data = [];
+
+async function cargarPreguntas() {
+  await fetch('../back/getPreguntas.php')
+    .then(response => response.json())
+    .then(dades => {
+      console.log(dades)
+      data = dades;
+      mostrarPregunta();
+    })
+    .catch(error => console.error('Error al cargar las preguntas:', error));
+}
+
 function mostrarPregunta() {
-    const partidaDiv = document.getElementById('partida');
-    const comentarioDiv = document.getElementById('comentario');
-    comentarioDiv.innerHTML = '';
-  
-    if (numeroPregunta >= data.length) {
-      partidaDiv.innerHTML = `<h2>Tu puntuación es: ${puntuacionActual} de ${numeroPregunta}</h2>`;
-      return;
-    }
-  
-    let preguntaActual = data[numeroPregunta];
-    let htmlString = `<br><h2>${preguntaActual.pregunta}</h2>`;
-  
-    for (let j = 0; j < preguntaActual.respostes.length; j++) {
-      htmlString += `<button class="resposta-button" data-index="${j}" data-correcta="${preguntaActual.resposta_correcta}">${opcions[j]} </button> ${preguntaActual.respostes[j].etiqueta}<br>`;
-    }
-  
-    numeroPregunta++;
-    partidaDiv.innerHTML = htmlString;
+  const partidaDiv = document.getElementById('partida');
+  partidaDiv.innerHTML = '';
+
+  data.forEach((pregunta, index) => {
+    const preguntaDiv = document.createElement('div');
+    preguntaDiv.classList.add('pregunta');
+
+    preguntaDiv.innerHTML = `
+      <h2>Pregunta ${index + 1}: ${pregunta.pregunta}</h2>
+      <ul>
+          ${pregunta.respostes.map(resposta => `
+              <li>${resposta.id}. ${resposta.etiqueta}</li>
+          `).join('')}
+      </ul>
+      <button class="modificar" 
+              data-id="${pregunta.id}" 
+              data-pregunta="${pregunta.pregunta}" 
+              data-respostes='${JSON.stringify(pregunta.respostes)}' 
+              data-respuesta-correcta="${pregunta.resposta_correcta}">
+          Modificar
+      </button>
+      <button class="eliminar" data-id="${pregunta.id}">Eliminar</button>
+    `;
+
+    partidaDiv.appendChild(preguntaDiv);
     
-    const buttons = partidaDiv.querySelectorAll('.resposta-button');
-    buttons.forEach(button => {
-      button.addEventListener('click', (event) => {
-        const index = parseInt(event.target.getAttribute('data-index'));
-        const respuestaCorrecta = parseInt(event.target.getAttribute('data-correcta'));
-        corregirRespuesta(index, respuestaCorrecta);
-      });
+    preguntaDiv.querySelector('.modificar').addEventListener('click', () => {
+      const idPregunta = pregunta.id;
+      const nuevaPregunta = pregunta.pregunta;
+      const nuevasRespuestas = pregunta.respostes;
+      const nuevaRespuestaCorrecta = pregunta.resposta_correcta;
+
+      mostrarFormularioModificar(idPregunta, nuevaPregunta, nuevasRespuestas, nuevaRespuestaCorrecta);
     });
+
+    // Evento para el botón "Eliminar"
+    preguntaDiv.querySelector('.eliminar').addEventListener('click', () => {
+      const idPregunta = pregunta.id;
+      eliminarPregunta(idPregunta);
+    });
+  });
+}
+
+function mostrarFormularioModificar(idPregunta, nuevaPregunta, nuevasRespuestas, nuevaRespuestaCorrecta) {
+  const adminDiv = document.getElementById('formularioPregunta');
+  adminDiv.innerHTML = `
+      <h3>Modificar Pregunta</h3>
+      <input type="text" id="modificarPregunta" value="${nuevaPregunta}" placeholder="Pregunta"><br>
+      <label>Respostes:</label><br>
+      ${nuevasRespuestas.map((respuesta, index) => `
+          <input type="text" id="modificarResposta${index}" data-id-res="${respuesta.id}" value="${respuesta.etiqueta}" placeholder="Resposta ${index + 1}"><br>
+      `).join('')}
+      <br>
+      <label>Resposta Correcta (0-${nuevasRespuestas.length - 1}):</label>
+      <input type="number" id="modificarRespuestaCorrecta" min="0" max="${nuevasRespuestas.length - 1}" value="${nuevaRespuestaCorrecta}"><br>
+      <button onclick="guardarCambios('${idPregunta}')">Guardar Cambios</button>
+  `;
+}
+
+function guardarCambios(idPregunta) {
+  console.log("change")
+  const nuevaPregunta = document.getElementById('modificarPregunta').value;
+  const nuevasRespuestas = [];
+
+  for (let i = 0; i < 4; i++) {
+    const respuesta = document.getElementById(`modificarResposta${i}`);
+    const respuestaId = document.getElementById(`modificarResposta${i}`).dataset.idRes;
+
+    if (respuesta) {
+      nuevasRespuestas.push({ id: respuestaId, etiqueta: respuesta.value });
+    }
   }
 
+  const nuevaRespuestaCorrecta = document.getElementById('modificarRespuestaCorrecta').value;
 
-function modificarPregunta(idPregunta, nuevaPregunta, nuevasRespuestas, nuevaRespuestaCorrecta) {
-    const datosModificados = {
-      id: idPregunta,
-      pregunta: nuevaPregunta,
-      respostes: nuevasRespuestas,
-      resposta_correcta: nuevaRespuestaCorrecta
-    };
-  
-    fetch('../back/modificarPregunta.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(datosModificados)
-    })
+  const datosModificados = {
+    id: idPregunta,
+    pregunta: nuevaPregunta,
+    respostes: nuevasRespuestas,
+    resposta_correcta: nuevaRespuestaCorrecta
+  };
+
+  fetch('../back/modificarPregunta.php', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(datosModificados)
+  })
     .then(response => response.json())
     .then(data => {
-      if (data.success) {
-        console.log("Pregunta modificada con éxito");
+      console.log(data);
 
-      } else {
-        console.log("Error al modificar la pregunta: ", data.error);
+      if (data.Pregunta_Modificada) {
+        console.log("Pregunta modificada con éxito");
+        cargarPreguntas(); // Carga las preguntas actualizadas
       }
-    })
-    .catch(error => {
-      console.error("Error al realizar la solicitud:", error);
+
     });
-  }
+}
+
 function eliminarPregunta(idPregunta) {
   const datos = {
     id: idPregunta
@@ -69,44 +125,18 @@ function eliminarPregunta(idPregunta) {
     },
     body: JSON.stringify(datos)
   })
-  .then(response => response.json())
-  .then(data => {
-    if (data.success) {
-      console.log("Pregunta eliminada con éxito");
-    } else {
-      console.log("Error al eliminar la pregunta: ", data.error);
-    }
-  })
-  .catch(error => {
-    console.error("Error al realizar la solicitud:", error);
-  });
-}
-
-function crearPregunta(titulo, contenido, categoria) {
-    const datos = {
-      titulo: titulo,
-      contenido: contenido,
-      categoria: categoria
-    };
-  
-    fetch('../back/crearPregunta.php', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(datos)
-    })
     .then(response => response.json())
     .then(data => {
       if (data.success) {
-        console.log("Pregunta creada con éxito");
+        console.log("Pregunta eliminada con éxito");
+        cargarPreguntas(); // Carga las preguntas actualizadas
       } else {
-        console.log("Error al crear la pregunta: ", data.error);
+        console.log("Error al eliminar la pregunta: ", data.error);
       }
     })
     .catch(error => {
       console.error("Error al realizar la solicitud:", error);
     });
-  }
-  
-  
+}
+
+document.addEventListener('DOMContentLoaded', cargarPreguntas);

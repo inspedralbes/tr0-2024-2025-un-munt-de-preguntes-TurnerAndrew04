@@ -1,17 +1,71 @@
 <?php
+$servername = "localhost";
+$username = "turner2";
+$password = "123456789hola";
+$dbname = "turner2";
 
-$numPreguntes = (int) $_GET['num'];
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-$jsonData = file_get_contents('preguntas_peliculas.json');
-$preguntes = json_decode($jsonData, true)['preguntes']; 
-
-shuffle($preguntes);
-$preguntasSeleccionadas = array_slice($preguntes, 0, $numPreguntes);
-
-foreach ($preguntasSeleccionadas as &$pregunta) {
-    unset($pregunta['resposta_correcta']);  
+if ($conn->connect_error) {
+    die("Conexión fallida: " . $conn->connect_error);
 }
+// $numPreguntes = (int) $_GET['num'];
 
-echo json_encode($preguntasSeleccionadas);
+if (isset($_GET['num'])) {
+    $num = $_GET['num'];
+
+    $sql = "SELECT * FROM preguntas ORDER BY RAND() LIMIT ?";
+    $stmt = $conn->prepare($sql);
+
+    $stmt->bind_param("i", $num);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $preguntas = $result->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($preguntas as &$pregunta) {
+        $sqlRespuestas = "SELECT * FROM respostes WHERE idQuestion = ?" ;
+        $stmtRespuestas = $conn->prepare($sqlRespuestas);
+
+        $stmtRespuestas->bind_param("i", $pregunta["id"]);
+
+        $stmtRespuestas->execute();
+
+        $resultRespuestas = $stmtRespuestas->get_result();
+        $respuestas = $resultRespuestas->fetch_all(MYSQLI_ASSOC);
+        $pregunta["respostes"] = $respuestas;
+    }
+
+    echo json_encode($preguntas);
+
+    $stmt->close();
+} else {
+    $sql = "SELECT * FROM preguntas";
+    $stmt = $conn->prepare($sql);
+
+    // $stmt->bind_param("i", $num);
+
+    $stmt->execute();
+
+    $result = $stmt->get_result();
+    $preguntas = $result->fetch_all(MYSQLI_ASSOC);
+
+    foreach ($preguntas as &$pregunta) {
+        $sqlRespuestas = "SELECT * FROM respostes WHERE idQuestion = ?" ;
+        $stmtRespuestas = $conn->prepare($sqlRespuestas);
+
+        $stmtRespuestas->bind_param("i", $pregunta["id"]);
+
+        $stmtRespuestas->execute();
+
+        $resultRespuestas = $stmtRespuestas->get_result();
+        $respuestas = $resultRespuestas->fetch_all(MYSQLI_ASSOC);
+        $pregunta["respostes"] = $respuestas;
+    }
+    echo json_encode($preguntas);
+    $stmt->close();
+}
+$conn->close();
 
 ?>

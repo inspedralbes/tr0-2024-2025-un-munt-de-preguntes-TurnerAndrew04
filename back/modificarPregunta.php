@@ -1,5 +1,5 @@
 <?php
-include ("connexion.php");
+include("connexion.php");
 
 $servername = "localhost";
 $username = "turner2";
@@ -19,7 +19,7 @@ $nuevaPregunta = $data['pregunta'];
 $nuevasRespuestas = $data['respostes'];
 $nuevaRespuestaCorrecta = $data['resposta_correcta'];
 
-$sql = "UPDATE preguntas SET pregunta = ?, respostes = ?, resposta_correcta = ? WHERE id = ?";
+$sql = "UPDATE preguntas SET pregunta = ? WHERE id = ?";
 
 $stmt = $conn->prepare($sql);
 
@@ -28,13 +28,36 @@ if ($stmt === false) {
     exit;
 }
 
-$stmt->bind_param("siii", $nuevaPregunta, $nuevasRespuestas, $nuevaRespuestaCorrecta, $idPregunta);
+$stmt->bind_param("siii", $nuevaPregunta, $idPregunta);
 
 if ($stmt->execute()) {
-    echo json_encode(["Pregunta Modificada" => true]);
+    // echo json_encode(["Pregunta_Modificada" => true]);
 } else {
-    echo json_encode(["Pregunta Modificada" => false, "Error al modificar la pregunta" => $stmt->error]);
+    // echo json_encode(["Pregunta_Modificada" => false, "error" => $stmt->error]);
 }
+foreach ($nuevasRespuestas as $key => $value) {
+
+    $sqlRespuesta = "UPDATE respostes SET resposta = '?' WHERE id = ?";
+
+    $stmtsqlRespuesta = $conn->prepare($sqlRespuesta);
+
+    if ($stmtsqlRespuesta === false) {
+        echo json_encode(["Pregunta Modificada" => false, "Error al modificar la pregunta" => $conn->error]);
+        exit;
+    }
+
+    $stmtsqlRespuesta->bind_param("si", $value["etiqueta"], $value["id"]);
+
+    if ($stmtsqlRespuesta->execute()) {
+        echo json_encode(["Pregunta_Modificada" => true]);
+    } else {
+        echo json_encode(["Pregunta_Modificada" => false, "error" => $stmt->error]);
+    }
+
+}
+
+
+$stmtsqlRespuesta->close();
 
 $stmt->close();
 $conn->close();
