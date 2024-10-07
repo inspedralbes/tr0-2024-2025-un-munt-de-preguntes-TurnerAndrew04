@@ -1,0 +1,485 @@
+{
+    "preguntes": [
+      {
+        "id": 1,
+        "pregunta": "Quina pel·lícula va guanyar l'Oscar a la millor pel·lícula l'any 1994?",
+        "respostes":[
+          {
+            "id": 1,
+            "etiqueta": "Forrest Gump"
+          },
+          {
+            "id": 2,
+            "etiqueta": "Pulp Fiction"
+          },
+          {
+            "id": 3,
+            "etiqueta": "The Shawshank Redemption"
+          },
+          {
+            "id": 4,
+            "etiqueta": "The Lion King"
+          }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://example.com/forrest_gump.jpg"
+      },
+      {
+        "id": 2,
+        "pregunta": "Quin any es va estrenar la pel·lícula 'The Matrix'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "1997"
+          },
+          {
+            "id": 2,
+            "etiqueta": "1999"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2000"
+          },
+          {
+            "id": 4,
+            "etiqueta": "2001"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/the_matrix.jpg"
+      },
+      {
+        "id": 3,
+        "pregunta": "En quin any es va estrenar 'Titanic'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "1995"
+          },
+          {
+            "id": 2,
+            "etiqueta": "1997"
+          },
+          {
+            "id": 3,
+            "etiqueta": "1998"
+          },
+          {
+            "id": 4,
+            "etiqueta": "1996"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/titanic.jpg"
+      },
+      {
+        "id": 4,
+        "pregunta": "Quina pel·lícula de superherois es va estrenar l'any 2008?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "The Dark Knight"
+          },
+          {
+            "id": 2,
+            "etiqueta": "Iron Man"
+          },
+          {
+            "id": 3,
+            "etiqueta": "The Incredible Hulk"
+          },
+          {
+            "id": 4,
+            "etiqueta": "Spider-Man 3"
+          }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://example.com/dark_knight.jpg"
+      },
+      {
+        "id": 5,
+        "pregunta": "Quin any es va estrenar la primera pel·lícula de 'Toy Story'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "1994"
+          },
+          {
+            "id": 2,
+            "etiqueta": "1995"
+          },
+          {
+            "id": 3,
+            "etiqueta": "1996"
+          },
+          {
+            "id": 4,
+            "etiqueta": "1997"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/toy_story.jpg"
+      },
+      {
+        "id": 6,
+        "pregunta": "Quin any es va estrenar 'Inception'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "2010"
+          },
+          {
+            "id": 2,
+            "etiqueta": "2009"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2011"
+          },
+          {
+            "id": 4,
+            "etiqueta": "2008"
+          }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://example.com/inception.jpg"
+      },
+      {
+        "id": 7,
+        "pregunta": "Quin any es va estrenar 'Jurassic Park'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "1992"
+          },
+          {
+            "id": 2,
+            "etiqueta": "1993"
+          },
+          {
+            "id": 3,
+            "etiqueta": "1994"
+          },
+          {
+            "id": 4,
+            "etiqueta": "1995"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/jurassic_park.jpg"
+      },
+      {
+        "id": 8,
+        "pregunta": "En quin any es va estrenar 'Avatar' de James Cameron?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "2007"
+          },
+          {
+            "id": 2,
+            "etiqueta": "2008"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2009"
+          },
+          {
+            "id": 4,
+            "etiqueta": "2010"
+          }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://example.com/avatar.jpg"
+      },
+      {
+        "id": 9,
+        "pregunta": "Quin any es va estrenar la pel·lícula 'Gladiator'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "2000"
+          },
+          {
+            "id": 2,
+            "etiqueta": "1999"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2001"
+          },
+          {
+            "id": 4,
+            "etiqueta": "2002"
+          }
+        ],
+        "resposta_correcta": 1,
+        "imatge": "https://example.com/gladiator.jpg"
+      },
+      {
+        "id": 10,
+        "pregunta": "Quina pel·lícula va ser la més taquillera l'any 2015?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "Furious 7"
+          },
+          {
+            "id": 2,
+            "etiqueta": "Avengers: Age of Ultron"
+          },
+          {
+            "id": 3,
+            "etiqueta": "Star Wars: The Force Awakens"
+          },
+          {
+            "id": 4,
+            "etiqueta": "Jurassic World"
+          }
+        ],
+        "resposta_correcta": 3,
+        "imatge": "https://example.com/star_wars_force_awakens.jpg"
+      },
+      {
+        "id": 11,
+        "pregunta": "Quin any es va estrenar 'Shrek'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "2000"
+          },
+          {
+            "id": 2,
+            "etiqueta": "2001"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2002"
+          },
+          {
+            "id": 4,
+            "etiqueta": "2003"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/shrek.jpg"
+      },
+      {
+        "id": 12,
+        "pregunta": "Quin any es va estrenar 'Harry Potter and the Philosopher's Stone'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "2000"
+          },
+          {
+            "id": 2,
+            "etiqueta": "2001"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2002"
+          },
+          {
+            "id": 4,
+            "etiqueta": "1999"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/harry_potter.jpg"
+      },
+      {
+        "id": 13,
+        "pregunta": "Quin any es va estrenar 'The Lord of the Rings: The Fellowship of the Ring'?",
+        "respostes": [
+          {
+            "id": 1,
+            "etiqueta": "2000"
+          },
+          {
+            "id": 2,
+            "etiqueta": "2001"
+          },
+          {
+            "id": 3,
+            "etiqueta": "2002"
+          },
+          {
+            "id": 4,
+            "etiqueta": "2003"
+          }
+        ],
+        "resposta_correcta": 2,
+        "imatge": "https://example.com/lotr_fellowship.jpg"
+      },
+        {
+            "id": 14,
+            "pregunta": "Quin any es va estrenar la pel·lícula 'Finding Nemo'?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "2002"
+              },
+              {
+                "id": 2,
+                "etiqueta": "2003"
+              },
+              {
+                "id": 3,
+                "etiqueta": "2004"
+              },
+              {
+                "id": 4,
+                "etiqueta": "2005"
+              }
+            ],
+            "resposta_correcta": 2,
+            "imatge": "https://example.com/finding_nemo.jpg"
+          },
+          {
+            "id": 15,
+            "pregunta": "Quin any es va estrenar 'The Avengers' de Marvel?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "2010"
+              },
+              {
+                "id": 2,
+                "etiqueta": "2011"
+              },
+              {
+                "id": 3,
+                "etiqueta": "2012"
+              },
+              {
+                "id": 4,
+                "etiqueta": "2013"
+              }
+            ],
+            "resposta_correcta": 3,
+            "imatge": "https://example.com/the_avengers.jpg"
+          },
+          {
+            "id": 16,
+            "pregunta": "Quin any es va estrenar 'The Godfather'?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "1971"
+              },
+              {
+                "id": 2,
+                "etiqueta": "1972"
+              },
+              {
+                "id": 3,
+                "etiqueta": "1973"
+              },
+              {
+                "id": 4,
+                "etiqueta": "1974"
+              }
+            ],
+            "resposta_correcta": 2,
+            "imatge": "https://example.com/the_godfather.jpg"
+          },
+          {
+            "id": 17,
+            "pregunta": "Quina pel·lícula va guanyar l'Oscar a la millor pel·lícula el 2019?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "Parasite"
+              },
+              {
+                "id": 2,
+                "etiqueta": "1917"
+              },
+              {
+                "id": 3,
+                "etiqueta": "Joker"
+              },
+              {
+                "id": 4,
+                "etiqueta": "Once Upon a Time in Hollywood"
+              }
+            ],
+            "resposta_correcta": 1,
+            "imatge": "https://example.com/parasite.jpg"
+          },
+          {
+            "id": 18,
+            "pregunta": "Quin any es va estrenar 'Frozen'?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "2012"
+              },
+              {
+                "id": 2,
+                "etiqueta": "2013"
+              },
+              {
+                "id": 3,
+                "etiqueta": "2014"
+              },
+              {
+                "id": 4,
+                "etiqueta": "2015"
+              }
+            ],
+            "resposta_correcta": 2,
+            "imatge": "https://example.com/frozen.jpg"
+          },
+          {
+            "id": 19,
+            "pregunta": "En quin any es va estrenar 'The Lion King'?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "1992"
+              },
+              {
+                "id": 2,
+                "etiqueta": "1993"
+              },
+              {
+                "id": 3,
+                "etiqueta": "1994"
+              },
+              {
+                "id": 4,
+                "etiqueta": "1995"
+              }
+            ],
+            "resposta_correcta": 3,
+            "imatge": "https://example.com/lion_king.jpg"
+          },
+          {
+            "id": 20,
+            "pregunta": "Quin any es va estrenar la pel·lícula 'Black Panther'?",
+            "respostes": [
+              {
+                "id": 1,
+                "etiqueta": "2016"
+              },
+              {
+                "id": 2,
+                "etiqueta": "2017"
+              },
+              {
+                "id": 3,
+                "etiqueta": "2018"
+              },
+              {
+                "id": 4,
+                "etiqueta": "2019"
+              }
+            ],
+            "resposta_correcta": 3,
+            "imatge": "https://example.com/black_panther.jpg"
+          }
+        ]
+      }
+        
