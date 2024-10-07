@@ -6,7 +6,7 @@ fetch('/tr0-2024-2025-un-munt-de-preguntes-TurnerAndrew04/back/getPreguntas.php?
 .then(info => {
   data = info; 
   //console.log(info);
-  iniciarCronometro(); // Iniciar el cronómetro cuando empieza el juego
+  iniciarCronometro(); 
   mostrarPregunta();
   actualizarMarcador();
 });   
@@ -14,8 +14,8 @@ fetch('/tr0-2024-2025-un-munt-de-preguntes-TurnerAndrew04/back/getPreguntas.php?
 let numeroPregunta = 0;
 let opcions = ['A', 'B', 'C', 'D'];
 let puntuacionActual = 0;
-let tiempoTranscurrido = 0; // Variable para el cronómetro
-let intervaloCronometro; // Variable para controlar el intervalo del cronómetro
+let tiempoTranscurrido = 0; 
+let intervaloCronometro; 
 
 let estadoPartida = {
   contadorPreguntas: 0,
@@ -61,7 +61,7 @@ function mostrarPregunta() {
 
   if (numeroPregunta >= data.length) {
     partidaDiv.innerHTML = `<h2>Tu puntuación es: ${puntuacionActual} de ${numeroPregunta}</h2>`;
-    detenerCronometro(); // Detenemos el cronómetro cuando se responden todas las preguntas
+    detenerCronometro(); 
     return;
   }
 
@@ -118,22 +118,19 @@ function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
   });
 }
 
-// Función para iniciar el cronómetro
 function iniciarCronometro() {
   const cronoDiv = document.getElementById('cronometro');
-  tiempoTranscurrido = 0; // Reiniciar el cronómetro
+  tiempoTranscurrido = 0; 
   intervaloCronometro = setInterval(() => {
     tiempoTranscurrido++;
     cronoDiv.innerHTML = `Tiempo: ${formatearTiempo(tiempoTranscurrido)}`;
   }, 1000);
 }
 
-// Función para detener el cronómetro
 function detenerCronometro() {
   clearInterval(intervaloCronometro);
 }
 
-// Función para formatear el tiempo como mm:ss
 function formatearTiempo(segundos) {
   const minutos = Math.floor(segundos / 60);
   const segundosRestantes = segundos % 60;
