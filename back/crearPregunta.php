@@ -1,5 +1,5 @@
 <?php
-include ("connexion.php");
+header('Content-Type: application/json');
 
 $servername = "localhost";
 $username = "turner2";
@@ -9,32 +9,43 @@ $dbname = "turner2";
 $conn = new mysqli($servername, $username, $password, $dbname);
 
 if ($conn->connect_error) {
-    die("Conexión fallida: " . $conn->connect_error);
+    die(json_encode(["success" => false, "error" => "Conexión fallida: " . $conn->connect_error]));
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
+
+if (!isset($data['pregunta']) || !isset($data['respostes']) || !isset($data['resposta_correcta'])) {
+    echo json_encode(["success" => false, "error" => "Datos incompletos"]);
+    exit;
+}
 
 $pregunta = $data['pregunta'];
 $respostes = $data['respostes'];
 $resposta_correcta = $data['resposta_correcta'];
 
-$sql = "INSERT INTO preguntas (pregunta, respostes, resposta_correcta) VALUES (?, ?, ?)";
+$stmtPregunta = $conn->prepare("INSERT INTO preguntas (pregunta, respostes, resposta_correcta) VALUES (?, ?, ?)");
+$numRespostes = count($respostes);
+$stmtPregunta->bind_param("sii", $pregunta, $numRespostes, $resposta_correcta);
 
-$stmt = $conn->prepare($sql);
+if ($stmtPregunta->execute()) {
+    $idPreguntaInsertada = $conn->insert_id;
+    
+    foreach ($respostes as $etiqueta) {
+        $stmtRespostes = $conn->prepare("INSERT INTO respostes (idQuestion, etiqueta) VALUES (?, ?)");
+        $stmtRespostes->bind_param("is", $idPreguntaInsertada, $etiqueta['etiqueta']);
+        if (!$stmtRespostes->execute()) {
+            echo json_encode(["success" => false, "error" => "Error al insertar respuestas: " . $stmtRespostes->error]);
+            exit;
+        }
+    }
 
-if ($stmt === false) {
-    echo json_encode(["success" => false, "error" => $conn->error]);
-    exit;
-}
-
-$stmt->bind_param("sss", $pregunta, $respostes, $resposta_correcta);
-
-if ($stmt->execute()) {
     echo json_encode(["success" => true]);
+
 } else {
-    echo json_encode(["success" => false, "error" => $stmt->error]);
+    echo json_encode(["success" => false, "error" => "Error al insertar la pregunta: " . $stmtPregunta->error]);
 }
 
-$stmt->close();
+$stmtPregunta->close();
+$stmtRespostes->close();
 $conn->close();
 ?>

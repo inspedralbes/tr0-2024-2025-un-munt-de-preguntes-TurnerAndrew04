@@ -14,25 +14,27 @@ if ($conn->connect_error) {
 
 $data = json_decode(file_get_contents('php://input'), true);
 
-$idPregunta = $data['id'];
-
-$sql = "DELETE FROM preguntas WHERE id = ?";
-
-$stmt = $conn->prepare($sql);
-
-if ($stmt === false) {
-    echo json_encode(["Pregunta eliminada" => false, "Error al eliminar la pregunta" => $conn->error]);
+if (!isset($data['id'])) {
+    echo json_encode(["Pregunta_eliminada" => false, "error" => "ID de la pregunta no especificado"]);
     exit;
 }
 
+$idPregunta = $data['id'];
+$obj = new stdClass();
+$obj->id = $idPregunta;
+
+$sql = "DELETE FROM respostes WHERE idQuestion = ?"; 
+$stmt = $conn->prepare($sql);
 $stmt->bind_param("i", $idPregunta);
+$stmt->execute();
 
-if ($stmt->execute()) {
-    echo json_encode(["Pregunta eliminad" => true]);
-} else {
-    echo json_encode(["Pregunta eliminad" => false, "Error al eliminar la pregunta" => $stmt->error]);
-}
+$sql = "DELETE FROM preguntas WHERE id = ?";
+$stmt = $conn->prepare($sql);
+$stmt->bind_param("i", $idPregunta);
+$stmt->execute();
+$obj ->filas = $stmt->num_rows();
 
-$stmt->close();
+
+echo json_encode($obj);
 $conn->close();
 ?>

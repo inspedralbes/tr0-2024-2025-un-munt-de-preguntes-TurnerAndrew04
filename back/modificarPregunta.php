@@ -59,6 +59,5 @@ foreach ($nuevasRespuestas as $key => $value) {
 
 $stmtsqlRespuesta->close();
 
-$stmt->close();
 $conn->close();
 ?>

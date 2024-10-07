@@ -1,20 +1,22 @@
+
 let data;
 
 fetch('http://localhost:8000/tr0-2024-2025-un-munt-de-preguntes-TurnerAndrew04/back/getPreguntas.php?num=10')
 .then(response => response.json())
 .then(info => {
   data = info; 
-  console.log(info);
+  //console.log(info);
+  iniciarCronometro(); // Iniciar el cronómetro cuando empieza el juego
   mostrarPregunta();
   actualizarMarcador();
 });   
 
-
-
-
 let numeroPregunta = 0;
 let opcions = ['A', 'B', 'C', 'D'];
 let puntuacionActual = 0;
+let tiempoTranscurrido = 0; // Variable para el cronómetro
+let intervaloCronometro; // Variable para controlar el intervalo del cronómetro
+
 let estadoPartida = {
   contadorPreguntas: 0,
   preguntes: [
@@ -52,7 +54,6 @@ function actualizarMarcador() {
   document.getElementById("marcador").innerHTML = htmlString;
 }
 
-
 function mostrarPregunta() {
   const partidaDiv = document.getElementById('partida');
   const comentarioDiv = document.getElementById('comentario');
@@ -60,6 +61,7 @@ function mostrarPregunta() {
 
   if (numeroPregunta >= data.length) {
     partidaDiv.innerHTML = `<h2>Tu puntuación es: ${puntuacionActual} de ${numeroPregunta}</h2>`;
+    detenerCronometro(); // Detenemos el cronómetro cuando se responden todas las preguntas
     return;
   }
 
@@ -113,5 +115,27 @@ function corregirRespuesta(respuestaCliente, respuestaCorrecta) {
     setTimeout(() => {
       mostrarPregunta();
     }, 2000);
-  })
+  });
+}
+
+// Función para iniciar el cronómetro
+function iniciarCronometro() {
+  const cronoDiv = document.getElementById('cronometro');
+  tiempoTranscurrido = 0; // Reiniciar el cronómetro
+  intervaloCronometro = setInterval(() => {
+    tiempoTranscurrido++;
+    cronoDiv.innerHTML = `Tiempo: ${formatearTiempo(tiempoTranscurrido)}`;
+  }, 1000);
+}
+
+// Función para detener el cronómetro
+function detenerCronometro() {
+  clearInterval(intervaloCronometro);
+}
+
+// Función para formatear el tiempo como mm:ss
+function formatearTiempo(segundos) {
+  const minutos = Math.floor(segundos / 60);
+  const segundosRestantes = segundos % 60;
+  return `${minutos.toString().padStart(2, '0')}:${segundosRestantes.toString().padStart(2, '0')}`;
 }

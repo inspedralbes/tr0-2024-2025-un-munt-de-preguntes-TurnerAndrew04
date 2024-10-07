@@ -1,69 +1,21 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
+    <link rel="stylesheet" href="css/style.css">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Juego - Adivina el Año de la Película</title>
 </head>
+
 <body>
     <h1>¡Bienvenido al Juego!</h1>
     <div id="partida"></div>
     <div id="comentario"></div>
     <div id="marcador"></div>
+    <div id="cronometro">Tiempo: 00:00</div>
     <button onclick="location.href='index.html'">Volver a la Página Principal</button>
     <script src="js/funciones.js"></script>
 </body>
+
 </html>
-
-
-
-<!-- // function eliminarPregunta(idPregunta) {
-    //   const datos = {
-    //     id: idPregunta
-    //   };
-    
-    //   fetch('../back/eliminarPregunta.php', {
-    //     method: 'POST',
-    //     body: JSON.stringify(datos)
-    //   })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     if (data.success) {
-    //       console.log("Pregunta eliminada con éxito");
-    //     } else {
-    //       console.log("Error al eliminar la pregunta: ", data.error);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.error("Error al realizar la solicitud:", error);
-    //   });
-    // }
-    
-    // function crearPregunta(idPregunta, nuevaPreguntaC, nuevasRespuestasC, nuevaRespuestaCorrectaC) {
-    //   const datosModificados = {
-    //     id: idPregunta,
-    //     pregunta: nuevaPreguntaC,
-    //     respostes: nuevasRespuestasC,
-    //     resposta_correcta: nuevaRespuestaCorrectaC
-    //   };
-    
-    //   fetch('../back/crearPregunta.php', {
-    //     method: 'POST',
-    //     headers: {
-    //       'Content-Type': 'application/json'
-    //     },
-    //     body: JSON.stringify(datosModificados)
-    //   })
-    //   .then(response => response.json())
-    //   .then(data => {
-    //     if (data.success) {
-    //       console.log("Pregunta creada con éxito");
-    //     } else {
-    //       console.log("Error al crear la pregunta: ", data.error);
-    //     }
-    //   })
-    //   .catch(error => {
-    //     console.error("Error al realizar la solicitud:", error);
-    //   });
-    // }
-     -->
